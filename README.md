@@ -3,6 +3,8 @@ secretsmanager-sidecar
 
 A simple command line program designed to be run as a sidecar container that writes a secret from [AWS SecretsManager](https://aws.amazon.com/secrets-manager/) to a file.
 
+[![Docker Repository on Quay](https://quay.io/repository/turner/secretsmanager-sidecar/status "Docker Repository on Quay")](https://quay.io/repository/turner/secretsmanager-sidecar)
+
 ### Example usage
 
 ```bash
