@@ -3,8 +3,6 @@ secretsmanager-sidecar
 
 A simple command line program designed to be run as a sidecar container that writes a secret from [AWS SecretsManager](https://aws.amazon.com/secrets-manager/) to a file.
 
-[![Docker Repository on Quay](https://quay.io/repository/turner/secretsmanager-sidecar/status "Docker Repository on Quay")](https://quay.io/repository/turner/secretsmanager-sidecar)
-
 ### Example usage
 
 ```bash
@@ -69,7 +67,7 @@ The following ECS task definition container definitions configure a sidecar that
 [
   {
     "name": "app",
-    "image": "quay.io/turner/turner-defaultbackend:0.2.0",
+    "image": "ghcr.io/warnermedia/fargate-default-backend:v0.9.0",
     "essential": true,
     "dependsOn": [
       {
@@ -108,7 +106,7 @@ The following ECS task definition container definitions configure a sidecar that
   },
   {
     "name": "secrets",
-    "image": "quay.io/turner/secretsmanager-sidecar:0.1.0",
+    "image": "<your hosted repo>/secretsmanager-sidecar:1.0.0",
     "essential": false,
     "environment": [
       {
