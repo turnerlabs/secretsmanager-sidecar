@@ -1,4 +1,4 @@
-FROM golang:1.18.2 AS build
+FROM golang:1.20.2 AS build
 WORKDIR /go/src/app
 COPY . .
 RUN GOOS=linux GOARCH=386 go build -v -o app .
