@@ -1,0 +1,12 @@
+services:
+  secrets:
+    build: .
+    image: secretsmanager-sidecar
+    volumes:
+      - $HOME/.aws/credentials:/root/.aws/credentials:ro
+      - $PWD/secret/:/var/secret/
+    environment:      
+      AWS_PROFILE: <your profile name>
+      AWS_REGION: us-east-1
+      SECRET_ID: <your secret>
+      SECRET_FILE: /var/secret/my-secret
