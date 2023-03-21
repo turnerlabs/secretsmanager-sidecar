@@ -40,6 +40,7 @@ the AWS SDK for Go documentation.
 docker run -it --rm \
   -v $HOME/.aws/credentials:/root/.aws/credentials:ro \
   -e AWS_PROFILE=default \
+  -e AWS_REGION=us-east-1 \
   -v $PWD/secret/:/var/secret/ \
   -e SECRET_ID=my-secret \
   -e SECRET_FILE=/var/secret/my-secret \
