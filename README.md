@@ -3,8 +3,6 @@ secretsmanager-sidecar
 
 A simple command line program designed to be run as a sidecar container that writes a secret from [AWS SecretsManager](https://aws.amazon.com/secrets-manager/) to a file.
 
-[![Docker Repository on Quay](https://quay.io/repository/turner/secretsmanager-sidecar/status "Docker Repository on Quay")](https://quay.io/repository/turner/secretsmanager-sidecar)
-
 ### Example usage
 
 ```bash
@@ -34,17 +32,32 @@ For more information see [Specifying Credentials][go-specifying-credentials] in
 the AWS SDK for Go documentation.
 
 
-### Usage with Docker
+### Example Usage with Docker
+
+Edit the included example docker-compose.yml or create one filling in your details. This assumes that your AWS credentials are in the ~/.aws/credentials file, so update the environment variables and region accordingly. 
+
+```
+services:
+  secrets:
+    build: .
+    image: secretsmanager-sidecar
+    volumes:
+      - $HOME/.aws/credentials:/root/.aws/credentials:ro
+      - $PWD/secret/:/var/secret/
+    environment:      
+      AWS_PROFILE: <your profile name>
+      AWS_REGION: us-east-1
+      SECRET_ID: <your secret>
+      SECRET_FILE: /var/secret/my-secret
+```
+
+Then use your new docker-compose file:
 
 ```bash
-docker run -it --rm \
-  -v $HOME/.aws/credentials:/root/.aws/credentials:ro \
-  -e AWS_PROFILE=default \
-  -v $PWD/secret/:/var/secret/ \
-  -e SECRET_ID=my-secret \
-  -e SECRET_FILE=/var/secret/my-secret \
-  quay.io/turner/secretsmanager-sidecar
+docker-compose up
 ```
+
+You should see a file created in a new secret directory.
 
 ### Usage with ECS/Fargate
 
@@ -54,7 +67,7 @@ The following ECS task definition container definitions configure a sidecar that
 [
   {
     "name": "app",
-    "image": "quay.io/turner/turner-defaultbackend:0.2.0",
+    "image": "ghcr.io/warnermedia/fargate-default-backend:v0.9.0",
     "essential": true,
     "dependsOn": [
       {
@@ -93,7 +106,7 @@ The following ECS task definition container definitions configure a sidecar that
   },
   {
     "name": "secrets",
-    "image": "quay.io/turner/secretsmanager-sidecar:0.1.0",
+    "image": "<your hosted repo>/secretsmanager-sidecar:1.0.0",
     "essential": false,
     "environment": [
       {
